@@ -9,15 +9,17 @@ import lombok.*;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class Like {
+
+public class Content {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Like_Id;
-    private Long Club_Id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    public Long id;
+    public String content;
 
-    private boolean Like_Toggle;
-
+    public Content(String content) {
+        this.content = content;
+    }
 }
