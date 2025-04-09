@@ -20,4 +20,11 @@ public class Like {
 
     private boolean Like_Toggle;
 
+    public void setLikeCount(Long Like_Id) {
+        this.Like_Id = Like_Id;
+    }
+    public Long getLikeCount() {
+        return Like_Id;
+    }
+
 }

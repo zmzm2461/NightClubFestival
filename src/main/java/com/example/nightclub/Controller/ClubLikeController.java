@@ -6,18 +6,24 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 
 @RestController
 @AllArgsConstructor
 public class ClubLikeController {
-    @GetMapping("/api/Clublike/{Like_Id}")
-    public ResponseEntity<Like> getClubLike(@PathVariable Long Like_Id) {
-        Like like = ClubLikeService.getLike(Like_Id)
-                .orElseThrow(() -> new EntityNotFoundException("Like not found"));
+    private final ClubLikeService clubLikeService;
+
+    @GetMapping("/api/Clublike/{Club_Id}")
+    public ResponseEntity<Like> getClubLike(@PathVariable Long Club_Id) {
+        Optional<Like> like = clubLikeService.getLike(Club_Id);
+        return like.isPresent() ? ResponseEntity.ok(like.get()) : ResponseEntity.notFound().build();
+    }
+    @PostMapping("/api/Clublike/{Club_Id}")
+    public ResponseEntity<Like> toggleClubLike(@PathVariable Long Club_Id, @RequestBody Boolean Like_Toggle) {
+        Like like = clubLikeService.toggleLike(Club_Id, Like_Toggle);
         return new ResponseEntity<>(like, HttpStatus.OK);
     }
 
