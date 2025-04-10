@@ -12,34 +12,35 @@ import java.util.Optional;
 public class ClubLikeService {
     private final ClubLikeRepository clubLikeRepository;
 
-    public Optional<Like> getLike(Long Like_Id) {
-        return clubLikeRepository.countByClubId(Like_Id);
+    public Optional<Like> getLike(Long Club_Id) {
+        return clubLikeRepository.findByClubId(Club_Id);
     }
 
-    public Like toggleLike(Long Club_Id, Boolean Like_Toggle) {
+    public String toggleLike(Long Club_Id, Boolean likeToggle) {
 
-        Optional<Like> existingLike = clubLikeRepository.findById(Club_Id);
+        Optional<Like> existingLike = clubLikeRepository.findByClubId(Club_Id);  // 수정된 부분
         if (existingLike.isPresent()) {
             // 클럽이 존재할 때
             Like like = existingLike.get();
-
-            if (Like_Toggle) {
+            if (likeToggle) {
                 // 토글을 활성화하면 좋아요 수 증가
-                like.setLikeCount(like.getLikeCount() + 1);
+                like.upCount();
+                clubLikeRepository.save(like); // 변경된 상태 저장
+                return "좋아요가 추가되었습니다";
             } else {
                 // 토글을 비활성화하면 좋아요 수 감소
-                like.setLikeCount(like.getLikeCount() - 1);
+                like.downCount();
+                clubLikeRepository.save(like); // 변경된 상태 저장
+                return "좋아요가 삭제되었습니다.";
             }
-            clubLikeRepository.save(like); // 변경된 상태 저장
-            return like; // 수정된 상태로 반환
-        }
-        else {
-            Like like = new Like();
-            if(Like_Toggle) {
-                like.setLikeCount(like.getLikeCount() + 1);
+
+        } else {
+            Like newlike = new Like(null, Club_Id, 0);
+            if (likeToggle) {
+                newlike.upCount();
             }
-            clubLikeRepository.save(like);
-            return like;
+            clubLikeRepository.save(newlike);
+            return "좋아요가 추가되었습니다.";
         }
     }
 }

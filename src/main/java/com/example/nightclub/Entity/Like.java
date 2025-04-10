@@ -9,21 +9,30 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "`like`")
 public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Club_Id")
-    private Long Club_Id;
-    @Column(name = "Club_Id")
-    private Long Like_Id;
+    private Long id;
 
+    @Column(name = "Club_id")
+    private Long clubId;
 
-    private boolean Like_Toggle;
+    private int likeCount;
 
-    public void setLikeCount(Long Like_Id) {
-        this.Like_Id = Like_Id;
+    private boolean likeToggle;
+
+    public Like(Long id, Long clubId, int likeCount) {
+        this.id = id;
+        this.clubId = clubId;
+        this.likeCount = likeCount;
     }
-    public Long getLikeCount() {
-        return Like_Id;
+
+    public void upCount() {
+        likeCount++;
+    }
+
+    public void downCount() {
+        likeCount--;
     }
 }

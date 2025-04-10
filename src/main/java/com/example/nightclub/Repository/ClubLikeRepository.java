@@ -8,7 +8,6 @@ import java.util.Optional;
 public interface ClubLikeRepository extends JpaRepository<Like, Long> {
 
 
-    Optional<Like> countByClubId(Long like_Id);
+    Optional<Like> findByClubId(Long clubId);
 
-    void delete(Like like);
 }
