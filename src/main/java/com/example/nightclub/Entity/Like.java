@@ -1,9 +1,6 @@
 package com.example.nightclub.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -15,8 +12,11 @@ import lombok.*;
 public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Like_Id;
+    @Column(name = "Club_Id")
     private Long Club_Id;
+    @Column(name = "Club_Id")
+    private Long Like_Id;
+
 
     private boolean Like_Toggle;
 
@@ -26,5 +26,4 @@ public class Like {
     public Long getLikeCount() {
         return Like_Id;
     }
-
 }

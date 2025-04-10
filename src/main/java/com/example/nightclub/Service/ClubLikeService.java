@@ -34,11 +34,12 @@ public class ClubLikeService {
             return like; // 수정된 상태로 반환
         }
         else {
+            Like like = new Like();
             if(Like_Toggle) {
-                Like like = new Like();
                 like.setLikeCount(like.getLikeCount() + 1);
             }
-            return null;
+            clubLikeRepository.save(like);
+            return like;
         }
     }
 }
