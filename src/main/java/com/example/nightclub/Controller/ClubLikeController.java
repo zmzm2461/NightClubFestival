@@ -17,7 +17,7 @@ import java.util.Optional;
 public class ClubLikeController {
     private final ClubLikeService clubLikeService;
 
-    @GetMapping("/api/Clublike/{ccClub_Id}")
+    @GetMapping("/api/Clublike/{Club_Id}")
     public ResponseEntity<Like> getClubLike(@PathVariable Long Club_Id) {
         Optional<Like> like = clubLikeService.getLike(Club_Id);
         return ResponseEntity.ok(like.get());
