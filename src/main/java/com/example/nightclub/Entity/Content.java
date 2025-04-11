@@ -21,8 +21,25 @@ public class Content {
 
     private Long id;
     private String content;
-    private String user_id;
+    private String userid;
     private Long post_id;
 
+
+    public Content(Long id, String content, String userid, Long post_id) {
+        this.id = id;
+        this.content = content;
+        this.userid = userid;
+        this.post_id = post_id;
+    }
+
+    public Content(String content, String userIp, Long postId) {
+        this.content = content;
+        this.userid = userIp;
+        this.post_id = postId;
+    }
+
+    public void postup() {
+        post_id++;
+    }
 
 }

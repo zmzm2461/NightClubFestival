@@ -22,6 +22,7 @@ public class ClubLikeController {
         Optional<Like> like = clubLikeService.getLike(Club_Id);
         return ResponseEntity.ok(like.get());
     }
+
     @PostMapping("/api/Clublike/{Club_Id}")
     public ResponseEntity<String> toggleClubLike(@PathVariable Long Club_Id, @RequestBody LikeRequestDto request) {
         String like = clubLikeService.toggleLike(Club_Id, request.getLikeToggle());

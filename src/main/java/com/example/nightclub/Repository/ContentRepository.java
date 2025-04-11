@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface ContentRepository extends JpaRepository<Content, Long> {
 
-    Optional<Content> findByuserIp(String userIp);
+    Optional<Content> findByuserid(String userid);
 }
