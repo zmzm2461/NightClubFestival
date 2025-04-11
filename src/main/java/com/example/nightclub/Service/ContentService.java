@@ -6,6 +6,7 @@ import com.example.nightclub.Repository.ContentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,10 +32,7 @@ public class ContentService {
             return "댓글 추가";
         }
     }
-    public Content save(ContentRequestDto request){
-        return contentRepository.save(request.toEntity());
-    }
-   public List<Content> findAll(){
+    public List<Content> findAll(){
         return contentRepository.findAll();
    }
 }
