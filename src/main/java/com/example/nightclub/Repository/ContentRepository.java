@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface ContentRepository extends JpaRepository<Content, Long> {
-    Optional<Content> findTopByUser_idOrderByPost_idDesc(Long user_id);
+
+    Optional<Content> findByuserIp(String userIp);
 }

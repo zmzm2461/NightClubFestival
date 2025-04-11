@@ -21,7 +21,7 @@ public class Content {
 
     private Long id;
     private String content;
-    private Long user_id;
+    private String user_id;
     private Long post_id;
 
 

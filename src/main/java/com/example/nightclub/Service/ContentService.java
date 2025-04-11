@@ -15,16 +15,15 @@ public class ContentService {
     private final ContentRepository contentRepository;
 
     // 댓글 작성 로직
-    public Content addContent(Long user_id, String userIp) {
+    public Content addContent(ContentRequestDto request ,String userIp) {
         // user_id로 최신 댓글을 조회
-        Optional<Content> lastContentOpt = contentRepository.findTopByUser_idOrderByPost_idDesc(user_id);
+        Optional<Content> content = contentRepository.findByuserIp(userIp);
 
-        Content content;
-        if (lastContentOpt.isPresent()) {
+        if (content.isPresent()) {
             // IP가 이미 존재하면 post_id를 증가시킨다
-            Content lastContent = lastContentOpt.get();
+            Content lastContent = content.get();
             content = Content.builder()
-                    .user_id(user_id)
+                    .user_id(userIp)
                     .content(userIp)
                     .post_id(lastContent.getPost_id() + 1)  // 마지막 post_id + 1 증가
                     .build();

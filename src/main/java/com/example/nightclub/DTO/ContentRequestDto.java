@@ -10,7 +10,7 @@ import lombok.Setter;
 public class ContentRequestDto {
     private Long id;
     private String content;
-    private Long user_id;
+    private String user_id;
     private Long post_id;
 
     public Content toEntity() {

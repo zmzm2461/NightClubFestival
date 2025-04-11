@@ -21,7 +21,21 @@ public class ContentCotroller {
 
     @PostMapping("/api/ClubContent")
     public ResponseEntity<Content> addContent(@RequestBody ContentRequestDto request, HttpServletRequest requestHttp) {
-        String userIp = getClientIp(requestHttp);
-        request.setUser_id(userIp);
+        // 클라이언트 IP 주소 추출
+        String userIp = getClientIp(requestHttp);  // getClientIp 메서드 호출
+
+        Content content = contentService.addContent(request, userIp);
+
+        return new ResponseEntity<>(content, HttpStatus.CREATED);
+
+    }
+
+    // 클라이언트 IP 주소를 추출하는 메서드
+    private String getClientIp(HttpServletRequest request) {
+        String remoteAddr = request.getHeader("X-Forwarded-For");
+        if (remoteAddr == null || remoteAddr.isEmpty()) {
+            remoteAddr = request.getRemoteAddr();  // 기본적으로 직접 연결된 클라이언트의 IP 주소
+        }
+        return remoteAddr;  // 클라이언트의 IP 주소 반환
     }
 }
