@@ -20,6 +20,21 @@ import jakarta.servlet.http.HttpServletRequest;
 public class ContentCotroller {
     private final ContentService contentService;
 
+
+    @GetMapping("/api/content")
+    public ResponseEntity<List<ContentResponceDto>> getAllContents(){
+        List<ContentResponceDto> Allcontents = contentService.findAll()
+                .stream()
+                .map(ContentResponceDto::new)
+                .toList();
+
+        return ResponseEntity.ok(Allcontents);
+    }
+
+
+}
+
+
     @PostMapping("/api/ClubContent")
     public ResponseEntity<String> addContent(@RequestBody ContentRequestDto request, HttpServletRequest requestHttp) {
         // 클라이언트 IP 주소 추출
@@ -30,5 +45,3 @@ public class ContentCotroller {
         return new ResponseEntity<>(content, HttpStatus.CREATED);
 
     }
-
-}

@@ -11,7 +11,6 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class ContentService {
-
     private final ContentRepository contentRepository;
 
     // 댓글 작성 로직
@@ -32,4 +31,10 @@ public class ContentService {
             return "댓글 추가";
         }
     }
+    public Content save(ContentRequestDto request){
+        return contentRepository.save(request.toEntity());
+    }
+   public List<Content> findAll(){
+        return contentRepository.findAll();
+   }
 }
