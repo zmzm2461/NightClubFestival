@@ -14,20 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-@NoArgsConstructor
 
 public class ContentCotroller {
 
     private final ContentService contentService;
 
-    @Autowired
-    public ContentController(ContentService contentService) {
-        this.contentService = contentService;
-    }
 
     @PostMapping("/api/ClubContent")
     public ResponseEntity<Content> addContent(@RequestBody ContentRequestDto request) {
-        ContentService saveContent = new contentService.save(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedContent);
+        Content saveContent = contentService.save(request);
+        return new ResponseEntity<>(saveContent, HttpStatus.CREATED);
     }
 }
