@@ -36,4 +36,15 @@ public class ContentService {
     public List<Content> findAll(){
         return contentRepository.findAll();
    }
+
+    public String deleteContent(String userid, Long postId) {
+        Optional<Content> content = contentRepository.findByUseridAndPostId(userid, postId);
+
+        if (content.isPresent()) {
+            contentRepository.deleteByUseridAndPostId(userid, postId);
+            return "댓글 삭제 완료";
+        } else {
+            return "해당 댓글이 존재하지 않습니다.";
+        }
+    }
 }
