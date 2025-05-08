@@ -18,7 +18,7 @@ public class ContentController {
     private final ContentService contentService;
 
 
-    @GetMapping("/api/content")
+    @GetMapping("/api/ClubContent")
     public ResponseEntity<List<ContentResponceDto>> getAllContents(){
         List<ContentResponceDto> Allcontents = contentService.findAll()
                 .stream()
@@ -37,13 +37,11 @@ public class ContentController {
         return new ResponseEntity<>(content, HttpStatus.CREATED);
 
     }
-
-    @DeleteMapping("/api/ClubContent")
-    public ResponseEntity<String> deleteContent(HttpServletRequest requestHttp, @RequestParam Long postId) {
-        String userid = requestHttp.getRemoteAddr(); // 클라이언트 IP
-        String result = contentService.deleteContent(userid, postId);
-
-        return ResponseEntity.ok(result);
+    @PatchMapping("/api/ClubContent/{id}")
+    public ResponseEntity<String> updateContent(@PathVariable Long id, @RequestBody ContentRequestDto request, HttpServletRequest requestHttp) {
+        String userid = requestHttp.getRemoteAddr();
+        String content = contentService.updateContent(id, request, userid);
+        return new ResponseEntity<>(content, HttpStatus.OK);
     }
 
 }

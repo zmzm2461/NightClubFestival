@@ -37,12 +37,13 @@ public class ContentService {
         return contentRepository.findAll();
    }
 
-    public String deleteContent(String userid, Long postId) {
-        Optional<Content> content = contentRepository.findByUseridAndPostId(userid, postId);
+    public String updateContent(Long id, ContentRequestDto request, String userid) {
+        Optional<Content> existingContents = contentRepository.findByUseridAndId(userid, id);
 
-        if (content.isPresent()) {
-            contentRepository.deleteByUseridAndPostId(userid, postId);
-            return "댓글 삭제 완료";
+        if(existingContents.isPresent()) {
+            Content content = new Content(id, request.getContent(), userid, request.getPost_id());
+            contentRepository.save(content);
+            return "댓글 수정 완료";
         } else {
             return "해당 댓글이 존재하지 않습니다.";
         }
