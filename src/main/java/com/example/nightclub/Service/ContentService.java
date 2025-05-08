@@ -16,12 +16,12 @@ public class ContentService {
 
     // 댓글 작성 로직
     public String addContent(ContentRequestDto request ,String userid) {
-        // user_id로 최신 댓글을 조회
-        Optional<Content> existingContent = contentRepository.findByuserid(userid);
+        // 입력받은 ip가 댓글을 작성했는지 확인
+        List<Content> existingContents = contentRepository.findByUserid(userid);
 
-        if (existingContent.isPresent()) {
+        if (!existingContents.isEmpty()) {
             // IP가 이미 존재하면 post_id를 증가시킨다
-            Content content = new Content(request.getContent(), userid, request.getId());
+            Content content = new Content(request.getContent(), userid, request.getPost_id());
             content.postup();
             contentRepository.save(content);
             return "댓글 추가";
@@ -29,7 +29,8 @@ public class ContentService {
             // IP가 없으면 새로운 댓글을 추가 (첫 번째 댓글)
             Content content = new Content(request.getContent(), userid, request.getPost_id());
             contentRepository.save(content);
-            return "댓글 추가";
+            content.postset();
+            return "댓글 생성";
         }
     }
     public List<Content> findAll(){
