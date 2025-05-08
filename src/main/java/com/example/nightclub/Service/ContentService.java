@@ -38,14 +38,16 @@ public class ContentService {
    }
 
     public String updateContent(Long id, ContentRequestDto request, String userid) {
-        Optional<Content> existingContents = contentRepository.findByUseridAndId(userid, id);
+        Optional<Content> existingContents = contentRepository.findById(id);
 
-        if(existingContents.isPresent()) {
-            Content content = new Content(id, request.getContent(), userid, request.getPost_id());
-            contentRepository.save(content);
-            return "댓글 수정 완료";
-        } else {
-            return "해당 댓글이 존재하지 않습니다.";
-        }
+        if(request.getUserid().equals(userid)) {
+            if(existingContents.isPresent()) {
+                Content content = new Content(id, request.getContent(), userid, request.getPost_id());
+                contentRepository.save(content);
+                return "댓글 수정 완료";
+            } else
+                return "해당 댓글이 존재하지 않습니다.";
+        } else
+            return "작성자만 수정할 수 있습니다";
     }
 }

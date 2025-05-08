@@ -31,9 +31,9 @@ public class Content {
         this.post_id = post_id;
     }
 
-    public Content(String content, String userIp, int post_id) {
+    public Content(String content, String userid, int post_id) {
         this.content = content;
-        this.userid = userIp;
+        this.userid = userid;
         this.post_id = post_id;
     }
 
